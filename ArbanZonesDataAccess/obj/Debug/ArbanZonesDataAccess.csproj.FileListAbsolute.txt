@@ -1,0 +1,12 @@
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\bin\Debug\ArbanZonesDataAccess.dll.config
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\bin\Debug\ArbanZonesDataAccess.dll
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\bin\Debug\ArbanZonesDataAccess.pdb
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\bin\Debug\EntityFramework.dll
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\bin\Debug\EntityFramework.SqlServer.dll
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\bin\Debug\EntityFramework.xml
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\bin\Debug\EntityFramework.SqlServer.xml
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\obj\Debug\ArbanZonesDataAccess.csproj.AssemblyReference.cache
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\obj\Debug\ArbanZonesDataAccess.csproj.CoreCompileInputs.cache
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\obj\Debug\ArbanZonesDataAccess.csproj.CopyComplete
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\obj\Debug\ArbanZonesDataAccess.dll
+E:\GitProject\Codezones\ArbanZones\ArbanZonesDataAccess\obj\Debug\ArbanZonesDataAccess.pdb

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArbanZonesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ArbanZonesEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_CategoryMaster" EntityType="ArbanZonesModel.tbl_CategoryMaster" />
+    <EntitySet Name="tbl_Role" EntityType="ArbanZonesModel.tbl_Role" />
+    <EntitySet Name="tbl_Service" EntityType="ArbanZonesModel.tbl_Service" />
+    <EntitySet Name="tbl_UserDetail" EntityType="ArbanZonesModel.tbl_UserDetail" />
+    <AssociationSet Name="FK_tbl_Service_tbl_CategoryMaster" Association="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster">
+      <End Role="tbl_CategoryMaster" EntitySet="tbl_CategoryMaster" />
+      <End Role="tbl_Service" EntitySet="tbl_Service" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="tbl_CategoryMaster">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EntryDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tbl_Service" Relationship="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster" FromRole="tbl_CategoryMaster" ToRole="tbl_Service" />
+    <Property Name="Images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tbl_Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EntryDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="tbl_Service">
+    <Key>
+      <PropertyRef Name="ServiceId" />
+    </Key>
+    <Property Name="ServiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CatId" Type="Int32" Nullable="false" />
+    <Property Name="ServiceName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EntryDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tbl_CategoryMaster" Relationship="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster" FromRole="tbl_Service" ToRole="tbl_CategoryMaster" />
+  </EntityType>
+  <EntityType Name="tbl_UserDetail">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserRoleId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="EntryDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+    <Property Name="VCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_tbl_Service_tbl_CategoryMaster">
+    <End Type="ArbanZonesModel.tbl_CategoryMaster" Role="tbl_CategoryMaster" Multiplicity="1" />
+    <End Type="ArbanZonesModel.tbl_Service" Role="tbl_Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_CategoryMaster">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="tbl_Service">
+        <PropertyRef Name="CatId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
