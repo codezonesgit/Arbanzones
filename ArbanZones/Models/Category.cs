@@ -8,7 +8,6 @@ namespace ArbanZones.Models
 {
     public class Category
     {
-        [JsonIgnore]
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Images { get; set; }

@@ -8,7 +8,6 @@ namespace ArbanZones.Models
 {
     public class RoleMaster
     {
-        [JsonIgnore]
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         [JsonIgnore]
