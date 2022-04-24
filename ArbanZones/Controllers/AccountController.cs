@@ -162,8 +162,9 @@ namespace ArbanZones.Controllers
             {
                 rd.Status = "Success";
                 rd.Code = 200;
-                rd.Message = "Registration Successfully!";
                 rd.Data = _repository.CreateUser(userDetails);
+                rd.Message = rd.Data != null ? "Registration Successfully!" : "Allredy Exit UserName and MobileNo";
+
                 return Request.CreateResponse(HttpStatusCode.OK, rd);
             }
             catch (Exception ex)
