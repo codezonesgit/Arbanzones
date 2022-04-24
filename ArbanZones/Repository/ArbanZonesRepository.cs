@@ -79,6 +79,8 @@ namespace ArbanZones.Repository
                         Password = password,
                         VCode = keyNew,
                         EntryDate = DateTime.Now,
+                        DeviceToken = userDetails.DeviceToken,
+                        DeviceName = userDetails.DeviceName,
 
                     };
                     _db.tbl_UserDetail.Add(newUser);
