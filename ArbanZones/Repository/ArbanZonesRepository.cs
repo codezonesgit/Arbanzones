@@ -16,6 +16,45 @@ namespace ArbanZones.Repository
             this._db = db;
         }
 
+        public bool CreateServiceProviderCategory(Service service)
+        {
+            try
+            {
+                List<tbl_ServiceProvider> _Services = new List<tbl_ServiceProvider>();
+                var Categories = service.ServiceProivedId.Split(',');
+                foreach (var category in Categories)
+                {
+                    var services = new tbl_ServiceProvider
+                    {
+                        CatId = Convert.ToInt32(category),
+                        IsActive = true,
+                        IsDeleted = false,
+                        RegId = service.RegId,
+                        ServiceName = service.ServiceName,
+                        EntryDate = DateTime.Now,
+
+                    };
+                    _Services.Add(services);
+                }
+                _db.tbl_ServiceProvider.AddRange(_Services);
+                if (_db.SaveChanges() > 0)
+                {
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
         public UserDetails CreateUser(UserDetails userDetails)
         {
             try
@@ -91,15 +130,18 @@ namespace ArbanZones.Repository
             }).ToList();
         }
 
-        public List<Service> GetServiceByCategoryId(int CatId)
+        public List<Service> GetServiceByCategoryRegId(string RegId)
         {
-            return _db.tbl_Service.Where(x => x.CatId == CatId && x.IsActive == true && x.IsDeleted == false).Select(x => new Service
-            {
-                ServiceId = x.ServiceId,
-                CategoryId = x.CatId,
-                ServiceName = x.ServiceName,
-                EntryDate = x.EntryDate
-            }).ToList();
+            var ServiceProvider = (from s in _db.tbl_ServiceProvider.Where(x => x.RegId == RegId)
+                                   join cat in _db.tbl_CategoryMaster on s.CatId equals cat.CategoryId
+                                   select new Service
+                                   {
+                                       ServiceId = s.ServiceId,
+                                       CategoryName = cat.CategoryName,
+                                       ServiceName = s.ServiceName,
+                                       EntryDate = s.EntryDate
+                                   }).ToList();
+            return ServiceProvider;
         }
 
         public UserDetails GetUserById(string Id)
@@ -108,21 +150,21 @@ namespace ArbanZones.Repository
 
             if (Id != null && !string.IsNullOrEmpty(Id))
             {
-              var  list1 = _db.tbl_UserDetail.Where(x => x.Id == Id).FirstOrDefault();
+                var list1 = _db.tbl_UserDetail.Where(x => x.Id == Id).FirstOrDefault();
 
-                list= new UserDetails
-                    {
-                        FirstName = list1.Name,
-                        LastName = list1.LastName,
-                        Address = list1.Address,
-                        EmailId = list1.EmailId,
-                        IsActive = (bool)list1.IsActive,
-                        IsDeleted = (bool)list1.IsDeleted,
-                        MobileNo = list1.MobileNo,
-                        UserName = list1.UserId,
-                        EntryDate = list1.EntryDate,
-                        Password = Helper.EncodePassword("Admin@123", list1.VCode),
-                    };
+                list = new UserDetails
+                {
+                    FirstName = list1.Name,
+                    LastName = list1.LastName,
+                    Address = list1.Address,
+                    EmailId = list1.EmailId,
+                    IsActive = (bool)list1.IsActive,
+                    IsDeleted = (bool)list1.IsDeleted,
+                    MobileNo = list1.MobileNo,
+                    UserName = list1.UserId,
+                    EntryDate = list1.EntryDate,
+                    Password = Helper.EncodePassword("Admin@123", list1.VCode),
+                };
             }
             return list;
         }

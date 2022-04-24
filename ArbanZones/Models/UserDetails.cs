@@ -18,6 +18,8 @@ namespace ArbanZones.Models
         public int UserRole { get; set; }
         public string Password { get; set; }
         public string Address { get; set; }
+        public string DeviceName { get; set; }
+        public string DeviceToken { get; set; }
         public DateTime? EntryDate { get; set; }
         [JsonIgnore]
         public DateTime? ModifyDate { get; set; }

@@ -17,18 +17,18 @@ namespace ArbanZonesDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbl_CategoryMaster()
         {
-            this.tbl_Service = new HashSet<tbl_Service>();
+            this.tbl_ServiceProvider = new HashSet<tbl_ServiceProvider>();
         }
     
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public string Images { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public string EntryBy { get; set; }
         public Nullable<System.DateTime> EntryDate { get; set; }
-        public string Images { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_Service> tbl_Service { get; set; }
+        public virtual ICollection<tbl_ServiceProvider> tbl_ServiceProvider { get; set; }
     }
 }

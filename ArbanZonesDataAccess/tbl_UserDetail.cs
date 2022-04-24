@@ -23,10 +23,12 @@ namespace ArbanZonesDataAccess
         public string MobileNo { get; set; }
         public string EmailId { get; set; }
         public string Password { get; set; }
+        public string VCode { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> EntryDate { get; set; }
         public Nullable<System.DateTime> ModifyDate { get; set; }
-        public string VCode { get; set; }
+        public string DeviceName { get; set; }
+        public string DeviceToken { get; set; }
     }
 }

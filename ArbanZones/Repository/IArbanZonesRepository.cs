@@ -12,7 +12,8 @@ namespace ArbanZones.Repository
     {
         IEnumerable<RoleMaster> GetRoleList();
         IEnumerable<Category> GetCategoryList();
-        List<Service> GetServiceByCategoryId(int CatId);
+        bool CreateServiceProviderCategory(Service service);
+        List<Service> GetServiceByCategoryRegId(string RegId);
         UserDetails CreateUser(UserDetails userDetails);
         IEnumerable<UserDetails> GetUserList();
         UserDetails GetUserById(string Id);

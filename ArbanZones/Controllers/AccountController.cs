@@ -100,22 +100,41 @@ namespace ArbanZones.Controllers
         #endregion
 
         #region Service Proivder Area
-
+        [Route("CreateServiceProviderCategory")]
+        [HttpPost]
+        public HttpResponseMessage CreateServiceProviderCategory(Service service)
+        {
+            try
+            {
+                rd.Status = "Success";
+                rd.Code = 200;
+                rd.Message = _repository.CreateServiceProviderCategory(service) ? "Record saved successfully" : "Record Not Saved!";
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+            }
+            catch (Exception ex)
+            {
+                rd.Status = "Fail";
+                rd.Code = 201;
+                rd.Message = ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+                throw;
+            }
+        }
         /// <summary>
         /// This Action is get to Service by Category Id
         /// </summary>
         /// <param name="CatId"></param>
         /// <returns></returns>
-        [Route("GetService")]
-        [HttpGet]
-        public HttpResponseMessage ServiceListByCategoryId(int CatId)
+        [Route("GetServicesProviderCategory")]
+        [HttpPost]
+        public HttpResponseMessage ServiceListByCategoryRegId(string RegId)
         {
             try
             {
                 rd.Status = "Success";
                 rd.Code = 200;
                 rd.Message = "";
-                rd.Data = _repository.GetServiceByCategoryId(CatId);
+                rd.Data = _repository.GetServiceByCategoryRegId(RegId);
                 return Request.CreateResponse(HttpStatusCode.OK, rd);
             }
             catch (Exception ex)

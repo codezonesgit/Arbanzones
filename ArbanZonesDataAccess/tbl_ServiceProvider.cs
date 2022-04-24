@@ -12,11 +12,12 @@ namespace ArbanZonesDataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Service
+    public partial class tbl_ServiceProvider
     {
         public int ServiceId { get; set; }
         public int CatId { get; set; }
         public string ServiceName { get; set; }
+        public string RegId { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public string EntryBy { get; set; }

@@ -72,7 +72,7 @@
     <Compile Include="tbl_Role.cs">
       <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tbl_Service.cs">
+    <Compile Include="tbl_ServiceProvider.cs">
       <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_UserDetail.cs">

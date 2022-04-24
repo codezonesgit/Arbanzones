@@ -28,13 +28,14 @@
           <Property Name="EntryBy" Type="varchar" MaxLength="50" />
           <Property Name="EntryDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="tbl_Service">
+        <EntityType Name="tbl_ServiceProvider">
           <Key>
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CatId" Type="int" Nullable="false" />
           <Property Name="ServiceName" Type="varchar" MaxLength="100" />
+          <Property Name="RegId" Type="varchar" MaxLength="80" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="EntryBy" Type="varchar" MaxLength="50" />
@@ -58,15 +59,17 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="EntryDate" Type="datetime" />
           <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="DeviceName" Type="varchar" MaxLength="40" />
+          <Property Name="DeviceToken" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_tbl_Service_tbl_CategoryMaster">
           <End Role="tbl_CategoryMaster" Type="Self.tbl_CategoryMaster" Multiplicity="1" />
-          <End Role="tbl_Service" Type="Self.tbl_Service" Multiplicity="*" />
+          <End Role="tbl_ServiceProvider" Type="Self.tbl_ServiceProvider" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_CategoryMaster">
               <PropertyRef Name="CategoryId" />
             </Principal>
-            <Dependent Role="tbl_Service">
+            <Dependent Role="tbl_ServiceProvider">
               <PropertyRef Name="CatId" />
             </Dependent>
           </ReferentialConstraint>
@@ -74,11 +77,11 @@
         <EntityContainer Name="ArbanZonesModelStoreContainer">
           <EntitySet Name="tbl_CategoryMaster" EntityType="Self.tbl_CategoryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Role" EntityType="Self.tbl_Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_Service" EntityType="Self.tbl_Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ServiceProvider" EntityType="Self.tbl_ServiceProvider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserDetail" EntityType="Self.tbl_UserDetail" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_tbl_Service_tbl_CategoryMaster" Association="Self.FK_tbl_Service_tbl_CategoryMaster">
             <End Role="tbl_CategoryMaster" EntitySet="tbl_CategoryMaster" />
-            <End Role="tbl_Service" EntitySet="tbl_Service" />
+            <End Role="tbl_ServiceProvider" EntitySet="tbl_ServiceProvider" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -88,11 +91,11 @@
         <EntityContainer Name="ArbanZonesEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_CategoryMaster" EntityType="ArbanZonesModel.tbl_CategoryMaster" />
           <EntitySet Name="tbl_Role" EntityType="ArbanZonesModel.tbl_Role" />
-          <EntitySet Name="tbl_Service" EntityType="ArbanZonesModel.tbl_Service" />
+          <EntitySet Name="tbl_ServiceProvider" EntityType="ArbanZonesModel.tbl_ServiceProvider" />
           <EntitySet Name="tbl_UserDetail" EntityType="ArbanZonesModel.tbl_UserDetail" />
           <AssociationSet Name="FK_tbl_Service_tbl_CategoryMaster" Association="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster">
             <End Role="tbl_CategoryMaster" EntitySet="tbl_CategoryMaster" />
-            <End Role="tbl_Service" EntitySet="tbl_Service" />
+            <End Role="tbl_ServiceProvider" EntitySet="tbl_ServiceProvider" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CategoryMaster">
@@ -101,12 +104,12 @@
           </Key>
           <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EntryDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tbl_Service" Relationship="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster" FromRole="tbl_CategoryMaster" ToRole="tbl_Service" />
-          <Property Name="Images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_ServiceProvider" Relationship="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster" FromRole="tbl_CategoryMaster" ToRole="tbl_ServiceProvider" />
         </EntityType>
         <EntityType Name="tbl_Role">
           <Key>
@@ -119,18 +122,19 @@
           <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EntryDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="tbl_Service">
+        <EntityType Name="tbl_ServiceProvider">
           <Key>
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CatId" Type="Int32" Nullable="false" />
           <Property Name="ServiceName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RegId" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EntryDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tbl_CategoryMaster" Relationship="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster" FromRole="tbl_Service" ToRole="tbl_CategoryMaster" />
+          <NavigationProperty Name="tbl_CategoryMaster" Relationship="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster" FromRole="tbl_ServiceProvider" ToRole="tbl_CategoryMaster" />
         </EntityType>
         <EntityType Name="tbl_UserDetail">
           <Key>
@@ -145,20 +149,22 @@
           <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="VCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="EntryDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
-          <Property Name="VCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DeviceName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DeviceToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_tbl_Service_tbl_CategoryMaster">
           <End Type="ArbanZonesModel.tbl_CategoryMaster" Role="tbl_CategoryMaster" Multiplicity="1" />
-          <End Type="ArbanZonesModel.tbl_Service" Role="tbl_Service" Multiplicity="*" />
+          <End Type="ArbanZonesModel.tbl_ServiceProvider" Role="tbl_ServiceProvider" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_CategoryMaster">
               <PropertyRef Name="CategoryId" />
             </Principal>
-            <Dependent Role="tbl_Service">
+            <Dependent Role="tbl_ServiceProvider">
               <PropertyRef Name="CatId" />
             </Dependent>
           </ReferentialConstraint>
@@ -172,11 +178,11 @@
           <EntitySetMapping Name="tbl_CategoryMaster">
             <EntityTypeMapping TypeName="ArbanZonesModel.tbl_CategoryMaster">
               <MappingFragment StoreEntitySet="tbl_CategoryMaster">
-                <ScalarProperty Name="Images" ColumnName="Images" />
                 <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
                 <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Images" ColumnName="Images" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
               </MappingFragment>
@@ -194,13 +200,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Service">
-            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_Service">
-              <MappingFragment StoreEntitySet="tbl_Service">
+          <EntitySetMapping Name="tbl_ServiceProvider">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_ServiceProvider">
+              <MappingFragment StoreEntitySet="tbl_ServiceProvider">
                 <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
                 <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RegId" ColumnName="RegId" />
                 <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
                 <ScalarProperty Name="CatId" ColumnName="CatId" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
@@ -210,11 +217,13 @@
           <EntitySetMapping Name="tbl_UserDetail">
             <EntityTypeMapping TypeName="ArbanZonesModel.tbl_UserDetail">
               <MappingFragment StoreEntitySet="tbl_UserDetail">
-                <ScalarProperty Name="VCode" ColumnName="VCode" />
+                <ScalarProperty Name="DeviceToken" ColumnName="DeviceToken" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="VCode" ColumnName="VCode" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="EmailId" ColumnName="EmailId" />
                 <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
