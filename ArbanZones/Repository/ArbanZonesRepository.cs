@@ -180,11 +180,11 @@ namespace ArbanZones.Repository
                    }).ToList();
         }
 
-        public UserDetails Login(UserDetails userDetails)
+        public UserDetails Login(Login login)
         {
             try
             {
-                var chkUser = _db.tbl_UserDetail.Where(x => x.MobileNo == userDetails.MobileNo.Trim() && x.IsActive == true && x.IsDeleted == false).FirstOrDefault();
+                var chkUser = _db.tbl_UserDetail.Where(x => x.MobileNo == login.Mobile.Trim() && x.IsActive == true && x.IsDeleted == false).FirstOrDefault();
                 if (chkUser == null)
                 {
                     return null;
@@ -194,6 +194,20 @@ namespace ArbanZones.Repository
                     return new UserDetails
                     {
                         FirstName = chkUser.Name,
+                        LastName=chkUser.LastName,
+                        EmailId=chkUser.EmailId,
+                        IsActive = (bool)chkUser.IsActive,
+                        MobileNo = chkUser.MobileNo,
+                        UserRole= chkUser.UserRoleId,
+                        Password=chkUser.Password,
+                        Address=chkUser.Address,
+                        DeviceName=chkUser.DeviceName,
+                        DeviceToken=chkUser.DeviceToken,
+                        EntryDate=chkUser.EntryDate,
+                        ModifyDate=chkUser.ModifyDate,
+                        
+
+                            
                     };
                 }
             }

@@ -184,13 +184,13 @@ namespace ArbanZones.Controllers
         /// <returns></returns>
         [Route("Login")]
         [HttpPost]
-        public HttpResponseMessage Login(UserDetails userDetails)
+        public HttpResponseMessage Login( Login login)
         {
             try
             {
                 rd.Status = "Success";
                 rd.Code = 200;
-                rd.Data = _repository.Login(userDetails);
+                rd.Data = _repository.Login(login);
                 rd.Message = rd.Data != null ? "Old User" : "New User";
                 return Request.CreateResponse(HttpStatusCode.OK, rd);
             }

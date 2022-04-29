@@ -15,7 +15,7 @@ namespace ArbanZones.Repository
         bool CreateServiceProviderCategory(Service service);
         List<Service> GetServiceByCategoryRegId(string RegId);
         UserDetails CreateUser(UserDetails userDetails);
-        UserDetails Login(UserDetails userDetails);
+        UserDetails Login(Login login);
         IEnumerable<UserDetails> GetUserList();
         UserDetails GetUserById(string Id);
     }
