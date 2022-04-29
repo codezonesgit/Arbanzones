@@ -67,35 +67,27 @@ namespace ArbanZones.Repository
                     var newUser = new tbl_UserDetail
                     {
                         Id = Guid.NewGuid().ToString(),
-                        Name = userDetails.FirstName,
-                        LastName = userDetails.LastName,
-                        EmailId = userDetails.EmailId,
+
                         MobileNo = userDetails.MobileNo,
-                        Address = userDetails.Address,
-                        UserRoleId = userDetails.UserRole,
+                        UserId = "Arz." + userDetails.EmailId,
+                        EntryDate = DateTime.Now,
                         IsActive = true,
                         IsDeleted = false,
-                        UserId = "Arz." + userDetails.EmailId,
-                        Password = password,
-                        VCode = keyNew,
-                        EntryDate = DateTime.Now,
                         DeviceToken = userDetails.DeviceToken,
                         DeviceName = userDetails.DeviceName,
-
                     };
                     _db.tbl_UserDetail.Add(newUser);
                     _db.SaveChanges();
                     return _db.tbl_UserDetail.Where(x => x.Id == newUser.Id)
                         .Select(x => new UserDetails
                         {
-                            FirstName = x.Name,
-                            LastName = x.LastName,
-                            Address = x.Address,
-                            EmailId = x.EmailId,
+                         
                             IsActive = (bool)x.IsActive,
                             IsDeleted = (bool)x.IsDeleted,
                             MobileNo = x.MobileNo,
-                            UserName = x.UserId
+                            UserName = x.UserId,
+                            UserMessage = "New User"
+
                         }
                         ).FirstOrDefault();
                 }
@@ -186,6 +178,29 @@ namespace ArbanZones.Repository
                        UserName = x.UserId,
                        EntryDate = x.EntryDate
                    }).ToList();
+        }
+
+        public UserDetails Login(UserDetails userDetails)
+        {
+            try
+            {
+                var chkUser = _db.tbl_UserDetail.Where(x => x.MobileNo == userDetails.MobileNo.Trim() && x.IsActive == true && x.IsDeleted == false).FirstOrDefault();
+                if (chkUser == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new UserDetails
+                    {
+                        FirstName = chkUser.Name,
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

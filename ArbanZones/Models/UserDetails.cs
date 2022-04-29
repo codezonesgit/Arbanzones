@@ -27,5 +27,7 @@ namespace ArbanZones.Models
         public bool IsActive { get; set; }
         [JsonIgnore]
         public bool IsDeleted { get; set; }
+
+        public string UserMessage { get; set; } 
     }
 }

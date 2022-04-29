@@ -163,7 +163,7 @@ namespace ArbanZones.Controllers
                 rd.Status = "Success";
                 rd.Code = 200;
                 rd.Data = _repository.CreateUser(userDetails);
-                rd.Message = rd.Data != null ? "Registration Successfully!" : "Allredy Exit UserName and MobileNo";
+                rd.Message = rd.Data != null ? "Registration Successfully!" : "Old User";
 
                 return Request.CreateResponse(HttpStatusCode.OK, rd);
             }
@@ -176,6 +176,34 @@ namespace ArbanZones.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// This Action to create a user
+        /// </summary>
+        /// <param name="userDetails"></param>
+        /// <returns></returns>
+        [Route("Login")]
+        [HttpPost]
+        public HttpResponseMessage Login(UserDetails userDetails)
+        {
+            try
+            {
+                rd.Status = "Success";
+                rd.Code = 200;
+                rd.Data = _repository.Login(userDetails);
+                rd.Message = rd.Data != null ? "Old User" : "New User";
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+            }
+            catch (Exception ex)
+            {
+                rd.Status = "Fail";
+                rd.Code = 201;
+                rd.Message = ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+                throw;
+            }
+        }
+
         /// <summary>
         /// This Action to get user by Id
         /// </summary>
