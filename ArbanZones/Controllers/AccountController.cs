@@ -184,7 +184,7 @@ namespace ArbanZones.Controllers
         /// <returns></returns>
         [Route("Login")]
         [HttpPost]
-        public HttpResponseMessage Login( Login login)
+        public HttpResponseMessage Login(Login login)
         {
             try
             {
@@ -244,6 +244,80 @@ namespace ArbanZones.Controllers
                 rd.Code = 200;
                 rd.Message = "";
                 rd.Data = _repository.GetUserList();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+            }
+            catch (Exception ex)
+            {
+                rd.Status = "Fail";
+                rd.Code = 201;
+                rd.Message = ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+                throw;
+            }
+        }
+        [Route("ProfileUpdate")]
+        [HttpPost]
+        public HttpResponseMessage ProfileUpdate(UserDetails userDetails)
+        {
+            try
+            {
+                rd.Status = "Success";
+                rd.Code = 200;
+                rd.Data = _repository.ProfileUpdate(userDetails);
+                rd.Message = rd.Data != null ? "Record Update Successfully" : "Record Not update";
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+            }
+            catch (Exception ex)
+            {
+                rd.Status = "Fail";
+                rd.Code = 201;
+                rd.Message = ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+                throw;
+            }
+        }
+        #endregion
+
+        #region
+        [Route("GetDashboardDetails")]
+        [HttpGet]
+        public HttpResponseMessage GetDashboardDetails()
+        {
+            try
+            {
+                rd.Status = "Success";
+                rd.Code = 200;
+                rd.Message = "";
+                rd.Data = _repository.GetDashboardDetails();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+            }
+            catch (Exception ex)
+            {
+                rd.Status = "Fail";
+                rd.Code = 201;
+                rd.Message = ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+                throw;
+            }
+        }
+        #endregion
+
+        #region
+        /// <summary>
+        /// This method is use to get Service cattegory by Id
+        /// </summary>
+        /// <param name="CategoryId"></param>
+        /// <returns></returns>
+        [Route("GetServiceCategoryById/{CategoryId}")]
+        [HttpGet]
+        public HttpResponseMessage GetServiceCategoryById(int CategoryId)
+        {
+            try
+            {
+                rd.Status = "Success";
+                rd.Code = 200;
+                rd.Message = "";
+                rd.Data = _repository.GetServiceByCategoryId(CategoryId);
                 return Request.CreateResponse(HttpStatusCode.OK, rd);
             }
             catch (Exception ex)

@@ -10,6 +10,8 @@
         <EntityTypeShape EntityType="ArbanZonesModel.tbl_ServiceProvider" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="ArbanZonesModel.tbl_UserDetail" Width="1.5" PointX="2.75" PointY="4.75" />
         <AssociationConnector Association="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster" />
+        <EntityTypeShape EntityType="ArbanZonesModel.tbl_Banner" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ArbanZonesModel.tbl_Offer" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

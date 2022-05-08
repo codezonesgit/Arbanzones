@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ArbanZonesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Banner">
+          <Key>
+            <PropertyRef Name="BannerId" />
+          </Key>
+          <Property Name="BannerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageUrl" Type="varchar(max)" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="EntryBy" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tbl_CategoryMaster">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -16,6 +28,18 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="EntryBy" Type="varchar" MaxLength="50" />
           <Property Name="EntryDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Offer">
+          <Key>
+            <PropertyRef Name="OfferId" />
+          </Key>
+          <Property Name="OfferId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OfferImgUrl" Type="varchar(max)" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="EntryBy" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tbl_Role">
           <Key>
@@ -62,27 +86,13 @@
           <Property Name="DeviceName" Type="varchar" MaxLength="40" />
           <Property Name="DeviceToken" Type="nvarchar(max)" />
         </EntityType>
-        <Association Name="FK_tbl_Service_tbl_CategoryMaster">
-          <End Role="tbl_CategoryMaster" Type="Self.tbl_CategoryMaster" Multiplicity="1" />
-          <End Role="tbl_ServiceProvider" Type="Self.tbl_ServiceProvider" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_CategoryMaster">
-              <PropertyRef Name="CategoryId" />
-            </Principal>
-            <Dependent Role="tbl_ServiceProvider">
-              <PropertyRef Name="CatId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ArbanZonesModelStoreContainer">
+          <EntitySet Name="tbl_Banner" EntityType="Self.tbl_Banner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CategoryMaster" EntityType="Self.tbl_CategoryMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Offer" EntityType="Self.tbl_Offer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Role" EntityType="Self.tbl_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ServiceProvider" EntityType="Self.tbl_ServiceProvider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserDetail" EntityType="Self.tbl_UserDetail" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_tbl_Service_tbl_CategoryMaster" Association="Self.FK_tbl_Service_tbl_CategoryMaster">
-            <End Role="tbl_CategoryMaster" EntitySet="tbl_CategoryMaster" />
-            <End Role="tbl_ServiceProvider" EntitySet="tbl_ServiceProvider" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -97,6 +107,8 @@
             <End Role="tbl_CategoryMaster" EntitySet="tbl_CategoryMaster" />
             <End Role="tbl_ServiceProvider" EntitySet="tbl_ServiceProvider" />
           </AssociationSet>
+          <EntitySet Name="tbl_Banner" EntityType="ArbanZonesModel.tbl_Banner" />
+          <EntitySet Name="tbl_Offer" EntityType="ArbanZonesModel.tbl_Offer" />
         </EntityContainer>
         <EntityType Name="tbl_CategoryMaster">
           <Key>
@@ -169,6 +181,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tbl_Banner">
+          <Key>
+            <PropertyRef Name="BannerId" />
+          </Key>
+          <Property Name="BannerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_Offer">
+          <Key>
+            <PropertyRef Name="OfferId" />
+          </Key>
+          <Property Name="OfferId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OfferImgUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -233,6 +269,32 @@
                 <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Banner">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_Banner">
+              <MappingFragment StoreEntitySet="tbl_Banner">
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="BannerId" ColumnName="BannerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Offer">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_Offer">
+              <MappingFragment StoreEntitySet="tbl_Offer">
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="OfferImgUrl" ColumnName="OfferImgUrl" />
+                <ScalarProperty Name="OfferId" ColumnName="OfferId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -29,5 +29,7 @@ namespace ArbanZonesDataAccess
         public virtual DbSet<tbl_Role> tbl_Role { get; set; }
         public virtual DbSet<tbl_ServiceProvider> tbl_ServiceProvider { get; set; }
         public virtual DbSet<tbl_UserDetail> tbl_UserDetail { get; set; }
+        public virtual DbSet<tbl_Banner> tbl_Banner { get; set; }
+        public virtual DbSet<tbl_Offer> tbl_Offer { get; set; }
     }
 }

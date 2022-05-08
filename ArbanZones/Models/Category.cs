@@ -8,9 +8,9 @@ namespace ArbanZones.Models
 {
     public class Category
     {
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
-        public string Images { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
         [JsonIgnore]
         public bool IsActive { get; set; }
         [JsonIgnore]

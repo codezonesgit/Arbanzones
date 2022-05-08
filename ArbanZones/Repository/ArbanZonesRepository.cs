@@ -3,6 +3,7 @@ using ArbanZones.Models;
 using ArbanZonesDataAccess;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -30,7 +31,7 @@ namespace ArbanZones.Repository
                         IsActive = true,
                         IsDeleted = false,
                         RegId = service.RegId,
-                        ServiceName = service.ServiceName,
+                        ServiceName = service.Name,
                         EntryDate = DateTime.Now,
 
                     };
@@ -81,7 +82,7 @@ namespace ArbanZones.Repository
                     return _db.tbl_UserDetail.Where(x => x.Id == newUser.Id)
                         .Select(x => new UserDetails
                         {
-                         
+
                             IsActive = (bool)x.IsActive,
                             IsDeleted = (bool)x.IsDeleted,
                             MobileNo = x.MobileNo,
@@ -107,11 +108,33 @@ namespace ArbanZones.Repository
         {
             return _db.tbl_CategoryMaster.Where(x => x.IsActive == true && x.IsDeleted == false).Select(x => new Category
             {
-                CategoryId = x.CategoryId,
-                CategoryName = x.CategoryName,
-                Images = x.Images,
+                Id = x.CategoryId,
+                Name = x.CategoryName,
+                Image = x.Images,
                 EntryDate = x.EntryDate
             }).ToList();
+        }
+
+        public DashboardDetails GetDashboardDetails()
+        {
+            DashboardDetails dashboardDetails = new DashboardDetails();
+
+            var Offer = _db.tbl_Offer.Where(x => x.IsActive == true && x.IsDeleted == false).FirstOrDefault();
+
+            dashboardDetails.OfferImgUrl = Offer.OfferImgUrl;
+            dashboardDetails.serviceCategory = _db.tbl_CategoryMaster.Where(x => x.IsActive == true && x.IsDeleted == false)
+                .Select(x => new Category
+                {
+                    Name = x.CategoryName,
+                    Id = x.CategoryId,
+                    Image = x.Images
+                }).ToList();
+            dashboardDetails.banners = _db.tbl_Banner.Where(x => x.IsActive == true && x.IsDeleted == false).Select(x => new Banner
+            {
+                ImgUrl = x.ImageUrl,
+                Active = x.IsActive
+            }).ToList();
+            return dashboardDetails;
         }
 
         public IEnumerable<RoleMaster> GetRoleList()
@@ -124,15 +147,35 @@ namespace ArbanZones.Repository
             }).ToList();
         }
 
+        public ServiceCategory GetServiceByCategoryId(int CategoryId)
+        {
+            ServiceCategory serviceCategory = new ServiceCategory();
+            serviceCategory.banners = _db.tbl_Banner.Where(x => x.IsActive == true && x.IsDeleted == false).Select(x => new Banner
+            {
+                ImgUrl = x.ImageUrl,
+                Active = x.IsActive
+            }).ToList();
+            serviceCategory.servicesList = _db.tbl_ServiceProvider.Where(x => x.CatId == CategoryId && x.IsActive == true && x.IsDeleted == false).Select(x => new Service
+            {
+                Name = x.ServiceName,
+                Id = x.ServiceId,
+
+            }).ToList();
+            serviceCategory.Rating = "5";
+            serviceCategory.NoOfBookingsPerYear = "100";
+            serviceCategory.ServiceCategryName = "";
+            return serviceCategory;
+        }
+
         public List<Service> GetServiceByCategoryRegId(string RegId)
         {
             var ServiceProvider = (from s in _db.tbl_ServiceProvider.Where(x => x.RegId == RegId)
                                    join cat in _db.tbl_CategoryMaster on s.CatId equals cat.CategoryId
                                    select new Service
                                    {
-                                       ServiceId = s.ServiceId,
+                                       Id = s.ServiceId,
                                        CategoryName = cat.CategoryName,
-                                       ServiceName = s.ServiceName,
+                                       Name = s.ServiceName,
                                        EntryDate = s.EntryDate
                                    }).ToList();
             return ServiceProvider;
@@ -194,22 +237,63 @@ namespace ArbanZones.Repository
                     return new UserDetails
                     {
                         FirstName = chkUser.Name,
-                        LastName=chkUser.LastName,
-                        EmailId=chkUser.EmailId,
+                        LastName = chkUser.LastName,
+                        EmailId = chkUser.EmailId,
                         IsActive = (bool)chkUser.IsActive,
                         MobileNo = chkUser.MobileNo,
-                        UserRole= chkUser.UserRoleId,
-                        Password=chkUser.Password,
-                        Address=chkUser.Address,
-                        DeviceName=chkUser.DeviceName,
-                        DeviceToken=chkUser.DeviceToken,
-                        EntryDate=chkUser.EntryDate,
-                        ModifyDate=chkUser.ModifyDate,
-                        
+                        UserRole = chkUser.UserRoleId,
+                        Password = chkUser.Password,
+                        Address = chkUser.Address,
+                        DeviceName = chkUser.DeviceName,
+                        DeviceToken = chkUser.DeviceToken,
+                        EntryDate = chkUser.EntryDate
 
-                            
                     };
                 }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public UserDetails ProfileUpdate(UserDetails userDetails)
+        {
+            UserDetails user1 = new UserDetails();
+            try
+            {
+                var chkUser = _db.tbl_UserDetail.Where(x => x.Id == userDetails.RegistrationId).FirstOrDefault();
+                if (chkUser != null)
+                {
+                    chkUser.Name = userDetails.FirstName;
+                    chkUser.LastName = userDetails.LastName;
+                    chkUser.EmailId= userDetails.EmailId != null ? userDetails.EmailId : chkUser.EmailId;
+                    chkUser.MobileNo = userDetails.MobileNo!=null? userDetails.MobileNo : chkUser.MobileNo;
+                    chkUser.Address = userDetails.Address != null? userDetails.Address : chkUser.Address;
+                    chkUser.ModifyDate = DateTime.Now;
+                    _db.tbl_UserDetail.Attach(chkUser);
+                    _db.Entry(chkUser).State = EntityState.Modified;
+                    if (_db.SaveChanges() > 0)
+                    {
+                        user1 = new UserDetails
+                        {
+                            FirstName = chkUser.Name,
+                            LastName = chkUser.LastName,
+                            EmailId = chkUser.EmailId,
+                            MobileNo = chkUser.MobileNo,
+                            Address = chkUser.Address,
+                            DeviceName = chkUser.DeviceName,
+                            DeviceToken = chkUser.DeviceToken,
+                            EntryDate = chkUser.EntryDate,
+                            ModifyDate = chkUser.ModifyDate
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                return user1;
             }
             catch (Exception ex)
             {

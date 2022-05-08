@@ -8,9 +8,9 @@ namespace ArbanZones.Models
 {
     public class Service
     {
-        public int ServiceId { get; set; }
+        public int Id { get; set; }
         public string CategoryName { get; set; }
-        public string ServiceName { get; set; }
+        public string Name { get; set; }
         public string ServiceProivedId { get; set; }
         public string RegId { get; set; }
 
