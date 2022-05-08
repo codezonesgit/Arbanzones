@@ -24,8 +24,8 @@ namespace ArbanZones.CommonMethod
             SmsType = "Trans";
             MyRoute = "15";
             /// Push notification Server Id
-            applicationID = "AAAATBzXzgY:APA91bF4FRFm82CYsKrAJ8O3ClmvRP4NBASkA_zNCE2tLVr4NVQrGUturdD0PUvOP3YQmQ9Kkri5fPXtyXwcHmjLt_0u9v3Jr45fchHdyf0OAWpQJC4K3u5EFc2NZUbI2Eij3IcvfvKo";
-            senderId = "326901419526";
+            applicationID = "AAAAmaXnbbo:APA91bHa4IToQHsk0VSW92yl0I2mpo-VPIlfWks0yLClEk-s-Qa2TFnCz5n3UrHwbucm4CVeYaTjSCIyc0goBEHL9id4iVxKbEOPIjd95R4moShnuskdSoRvrbuB1drMLVwyKumrY4kS";
+            senderId = "659913403834";
         }
         public bool SendMySMS(string MobNo, string Message)
         {

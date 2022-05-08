@@ -12,6 +12,7 @@ namespace ArbanZones.Repository
     public class ArbanZonesRepository : IArbanZonesRepository
     {
         private ArbanZonesEntities _db;
+        readonly private Services _service = new Services();
         public ArbanZonesRepository(ArbanZonesEntities db)
         {
             this._db = db;
@@ -78,7 +79,10 @@ namespace ArbanZones.Repository
                         DeviceName = userDetails.DeviceName,
                     };
                     _db.tbl_UserDetail.Add(newUser);
-                    _db.SaveChanges();
+                    if (_db.SaveChanges() > 0)
+                    {
+                        //_service.PushNotification("Hello user", "New User Create Successfully", newUser.DeviceToken);
+                    }
                     return _db.tbl_UserDetail.Where(x => x.Id == newUser.Id)
                         .Select(x => new UserDetails
                         {
@@ -275,6 +279,7 @@ namespace ArbanZones.Repository
                     _db.Entry(chkUser).State = EntityState.Modified;
                     if (_db.SaveChanges() > 0)
                     {
+                        //_service.PushNotification("Hello user", "Update Successfully", newUser.DeviceToken);
                         user1 = new UserDetails
                         {
                             FirstName = chkUser.Name,

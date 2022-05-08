@@ -255,6 +255,12 @@ namespace ArbanZones.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// This Action to update user
+        /// </summary>
+        /// <param name="userDetails"></param>
+        /// <returns></returns>
         [Route("ProfileUpdate")]
         [HttpPost]
         public HttpResponseMessage ProfileUpdate(UserDetails userDetails)
