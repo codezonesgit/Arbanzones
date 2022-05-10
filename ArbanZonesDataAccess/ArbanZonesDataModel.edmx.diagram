@@ -12,6 +12,13 @@
         <AssociationConnector Association="ArbanZonesModel.FK_tbl_Service_tbl_CategoryMaster" />
         <EntityTypeShape EntityType="ArbanZonesModel.tbl_Banner" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="ArbanZonesModel.tbl_Offer" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="ArbanZonesModel.tbl_ProblemImageMaster" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ArbanZonesModel.tbl_ServiceItemMaster" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ArbanZonesModel.tbl_ServiceMaster" Width="1.5" PointX="5.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ArbanZonesModel.tbl_ServiceOrder" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ArbanZonesModel.tbl_ServiceProblem" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ArbanZonesModel.tbl_ServiceProblemRejected" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="ArbanZonesModel.tbl_StatusMaster" Width="1.5" PointX="2.75" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

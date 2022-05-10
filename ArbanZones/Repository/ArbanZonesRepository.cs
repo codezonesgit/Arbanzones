@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace ArbanZones.Repository
@@ -57,7 +58,7 @@ namespace ArbanZones.Repository
 
         }
 
-        public UserDetails CreateUser(UserDetails userDetails)
+        public async Task<UserDetails> CreateUser(UserDetails userDetails)
         {
             try
             {
@@ -79,11 +80,11 @@ namespace ArbanZones.Repository
                         DeviceName = userDetails.DeviceName,
                     };
                     _db.tbl_UserDetail.Add(newUser);
-                    if (_db.SaveChanges() > 0)
+                    if (await _db.SaveChangesAsync() > 0)
                     {
                         //_service.PushNotification("Hello user", "New User Create Successfully", newUser.DeviceToken);
                     }
-                    return _db.tbl_UserDetail.Where(x => x.Id == newUser.Id)
+                    return await _db.tbl_UserDetail.Where(x => x.Id == newUser.Id)
                         .Select(x => new UserDetails
                         {
 
@@ -94,7 +95,7 @@ namespace ArbanZones.Repository
                             UserMessage = "New User"
 
                         }
-                        ).FirstOrDefault();
+                        ).FirstOrDefaultAsync();
                 }
                 else
                 {
@@ -159,11 +160,11 @@ namespace ArbanZones.Repository
                 ImgUrl = x.ImageUrl,
                 Active = x.IsActive
             }).ToList();
-            serviceCategory.servicesList = _db.tbl_ServiceProvider.Where(x => x.CatId == CategoryId && x.IsActive == true && x.IsDeleted == false).Select(x => new Service
+            serviceCategory.servicesList = _db.tbl_ServiceMaster.Where(x => x.CatId == CategoryId && x.IsActive == true && x.IsDeleted == false).Select(x => new ServiceMaster
             {
-                Name = x.ServiceName,
-                Id = x.ServiceId,
-
+                Name = x.Name,
+                Id = x.Id,
+                Image = x.Image
             }).ToList();
             serviceCategory.Rating = "5";
             serviceCategory.NoOfBookingsPerYear = "100";
@@ -271,9 +272,9 @@ namespace ArbanZones.Repository
                 {
                     chkUser.Name = userDetails.FirstName;
                     chkUser.LastName = userDetails.LastName;
-                    chkUser.EmailId= userDetails.EmailId != null ? userDetails.EmailId : chkUser.EmailId;
-                    chkUser.MobileNo = userDetails.MobileNo!=null? userDetails.MobileNo : chkUser.MobileNo;
-                    chkUser.Address = userDetails.Address != null? userDetails.Address : chkUser.Address;
+                    chkUser.EmailId = userDetails.EmailId != null ? userDetails.EmailId : chkUser.EmailId;
+                    chkUser.MobileNo = userDetails.MobileNo != null ? userDetails.MobileNo : chkUser.MobileNo;
+                    chkUser.Address = userDetails.Address != null ? userDetails.Address : chkUser.Address;
                     chkUser.ModifyDate = DateTime.Now;
                     _db.tbl_UserDetail.Attach(chkUser);
                     _db.Entry(chkUser).State = EntityState.Modified;
@@ -304,6 +305,93 @@ namespace ArbanZones.Repository
             {
                 throw;
             }
+        }
+
+        public bool ForgotPassword(ForgotPassword forgotPassword)
+        {
+            bool Result = false;
+
+            try
+            {
+                var chkUser = _db.tbl_UserDetail.Where(x => x.Id == forgotPassword.RegistrationId).FirstOrDefault();
+                if (chkUser != null)
+                {
+                    chkUser.Name = forgotPassword.NewPassword;
+                    chkUser.ModifyDate = DateTime.Now;
+                    _db.tbl_UserDetail.Attach(chkUser);
+                    _db.Entry(chkUser).State = EntityState.Modified;
+                    if (_db.SaveChanges() > 0)
+                    {
+                        //_service.PushNotification("Hello user", "Update Successfully", newUser.DeviceToken);
+                        Result = true;
+                    }
+                    else
+                    {
+                        Result = false;
+                    }
+                }
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<ServiceItemMaster>> GetServiceItemListByServiceId(int ServiceId)
+        {
+            return await (from Sim in _db.tbl_ServiceItemMaster
+                          join sm in _db.tbl_ServiceMaster on Sim.ServiceId equals sm.Id
+                          where Sim.IsActive == true && Sim.IsDeleted == false && Sim.ServiceId == ServiceId
+                          select new ServiceItemMaster
+                          {
+
+                              Id = Sim.Id,
+                              Description1 = Sim.DecriptionTitle1,
+                              Description2 = Sim.DecriptionTitle2,
+                              AvgAmount = Sim.AvgPrice,
+                              ServiceItemName = Sim.ItemTitleName,
+                              Image = Sim.Image,
+                              ServiceName = sm.Name
+                          }).ToListAsync();
+        }
+
+        public async Task<ServiceItemMaster> GetViewServiceDetailsByServiceItemId(int SeviceItemId)
+        {
+            return await _db.tbl_ServiceItemMaster.Where(x => x.ServiceId == SeviceItemId && x.IsActive == true && x.IsDeleted == false).Select(x => new ServiceItemMaster
+            {
+                Id = x.Id,
+                ServiceItemName = x.ItemTitleName,
+                AvgAmount = x.AvgPrice,
+                Description = x.Decription,
+                Image = x.Image
+            }).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> CreateServiceProblem(ServiceProblem serviceProblem)
+        {
+            bool Result = false;
+            var newProblem = new tbl_ServiceProblem
+            {
+                Id = Guid.NewGuid().ToString(),
+                PreferredAmount = serviceProblem.Amount,
+                ServiceItemId = serviceProblem.ServiceItemId,
+                UserId = serviceProblem.UserId,
+                DateOfAvailibility = serviceProblem.DateOfAvailibility,
+                EntryDate = DateTime.Now
+            };
+            _db.tbl_ServiceProblem.Add(newProblem);
+            if (await _db.SaveChangesAsync() > 0)
+            {
+                Result = true;
+                //_service.PushNotification("Hello user", "New User Create Successfully", newUser.DeviceToken);
+            }
+            else
+            {
+                Result = false;
+            }
+
+            return Result;
         }
     }
 }

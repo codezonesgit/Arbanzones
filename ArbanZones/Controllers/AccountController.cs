@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ArbanZones.Repository;
 using ArbanZonesDataAccess;
+using System.Threading.Tasks;
 
 namespace ArbanZones.Controllers
 {
@@ -97,6 +98,88 @@ namespace ArbanZones.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// This method is use to get Service cattegory by Id
+        /// </summary>
+        /// <param name="CategoryId"></param>
+        /// <returns></returns>
+        [Route("GetServiceCategoryById/{CategoryId}")]
+        [HttpGet]
+        public HttpResponseMessage GetServiceCategoryById(int CategoryId)
+        {
+            try
+            {
+                rd.Status = "Success";
+                rd.Code = 200;
+                rd.Message = "";
+                rd.Data = _repository.GetServiceByCategoryId(CategoryId);
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+            }
+            catch (Exception ex)
+            {
+                rd.Status = "Fail";
+                rd.Code = 201;
+                rd.Message = ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+                throw;
+            }
+        }
+        #endregion
+
+        #region Service Master Area
+        /// <summary>
+        /// This Action is get to Service Item by Service Id
+        /// </summary>
+        /// <param name="ServiceId"></param>
+        /// <returns></returns>
+        [Route("GetServicItem/{ServiceId}")]
+        [HttpGet]
+        public HttpResponseMessage ServiceItemListByServiceId(int ServiceId)
+        {
+            try
+            {
+                rd.Status = "Success";
+                rd.Code = 200;
+                rd.Message = "";
+                rd.Data = _repository.GetServiceItemListByServiceId(ServiceId);
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+            }
+            catch (Exception ex)
+            {
+                rd.Status = "Fail";
+                rd.Code = 201;
+                rd.Message = ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This Action is View Service Item Details by Service Item Id
+        /// </summary>
+        /// <param name="ServiceItemId"></param>
+        /// <returns></returns>
+        [Route("ViewServiceDetails/{ServiceItemId}")]
+        [HttpGet]
+        public HttpResponseMessage ViewServiceDetails(int ServiceItemId)
+        {
+            try
+            {
+                rd.Status = "Success";
+                rd.Code = 200;
+                rd.Message = "";
+                rd.Data = _repository.GetViewServiceDetailsByServiceItemId(ServiceItemId);
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+            }
+            catch (Exception ex)
+            {
+                rd.Status = "Fail";
+                rd.Code = 201;
+                rd.Message = ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+                throw;
+            }
+        }
         #endregion
 
         #region Service Proivder Area
@@ -121,9 +204,9 @@ namespace ArbanZones.Controllers
             }
         }
         /// <summary>
-        /// This Action is get to Service by Category Id
+        /// This Action is get to Service by Services Provider Id
         /// </summary>
-        /// <param name="CatId"></param>
+        /// <param name="RegId"></param>
         /// <returns></returns>
         [Route("GetServicesProviderCategory")]
         [HttpPost]
@@ -282,9 +365,35 @@ namespace ArbanZones.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// This Action to for Forgot password
+        /// </summary>
+        /// <param name="forgotPassword"></param>
+        /// <returns></returns>
+        [Route("ForgotPassword")]
+        [HttpPost]
+        public HttpResponseMessage ForgotPassword(ForgotPassword forgotPassword)
+        {
+            try
+            {
+                rd.Status = "Success";
+                rd.Code = 200;
+                rd.Data = _repository.ForgotPassword(forgotPassword);
+                rd.Message = rd.Data != null ? "Record Update Successfully" : "Record Not update";
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+            }
+            catch (Exception ex)
+            {
+                rd.Status = "Fail";
+                rd.Code = 201;
+                rd.Message = ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.OK, rd);
+                throw;
+            }
+        }
         #endregion
 
-        #region
+        #region This area define related to Dashboard
         [Route("GetDashboardDetails")]
         [HttpGet]
         public HttpResponseMessage GetDashboardDetails()
@@ -308,22 +417,22 @@ namespace ArbanZones.Controllers
         }
         #endregion
 
-        #region
+        #region Order Area
         /// <summary>
-        /// This method is use to get Service cattegory by Id
+        /// This Action to create a user
         /// </summary>
-        /// <param name="CategoryId"></param>
+        /// <param name="userDetails"></param>
         /// <returns></returns>
-        [Route("GetServiceCategoryById/{CategoryId}")]
-        [HttpGet]
-        public HttpResponseMessage GetServiceCategoryById(int CategoryId)
+        [Route("SendServiceProblem")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> CreateServiceProblem(ServiceProblem serviceProblem)
         {
             try
             {
                 rd.Status = "Success";
                 rd.Code = 200;
-                rd.Message = "";
-                rd.Data = _repository.GetServiceByCategoryId(CategoryId);
+                var result = await _repository.CreateServiceProblem(serviceProblem);
+                rd.Message = result == true ? "Your order has been placed!" : "Opps";
                 return Request.CreateResponse(HttpStatusCode.OK, rd);
             }
             catch (Exception ex)

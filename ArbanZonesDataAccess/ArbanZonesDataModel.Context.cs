@@ -31,5 +31,12 @@ namespace ArbanZonesDataAccess
         public virtual DbSet<tbl_UserDetail> tbl_UserDetail { get; set; }
         public virtual DbSet<tbl_Banner> tbl_Banner { get; set; }
         public virtual DbSet<tbl_Offer> tbl_Offer { get; set; }
+        public virtual DbSet<tbl_ProblemImageMaster> tbl_ProblemImageMaster { get; set; }
+        public virtual DbSet<tbl_ServiceItemMaster> tbl_ServiceItemMaster { get; set; }
+        public virtual DbSet<tbl_ServiceMaster> tbl_ServiceMaster { get; set; }
+        public virtual DbSet<tbl_ServiceOrder> tbl_ServiceOrder { get; set; }
+        public virtual DbSet<tbl_ServiceProblem> tbl_ServiceProblem { get; set; }
+        public virtual DbSet<tbl_ServiceProblemRejected> tbl_ServiceProblemRejected { get; set; }
+        public virtual DbSet<tbl_StatusMaster> tbl_StatusMaster { get; set; }
     }
 }

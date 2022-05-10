@@ -11,7 +11,7 @@ namespace ArbanZones.Models
         public string NoOfBookingsPerYear { get; set; }
         public string Rating { get; set; }
         public List<Banner> banners { get; set; }
-        public List<Service> servicesList { get; set; }
+        public List<ServiceMaster> servicesList { get; set; }
 
     }
 }

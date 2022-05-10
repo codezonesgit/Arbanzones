@@ -75,10 +75,31 @@
     <Compile Include="tbl_Offer.cs">
       <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_ProblemImageMaster.cs">
+      <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Role.cs">
       <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_ServiceItemMaster.cs">
+      <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ServiceMaster.cs">
+      <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ServiceOrder.cs">
+      <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ServiceProblem.cs">
+      <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ServiceProblemRejected.cs">
+      <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_ServiceProvider.cs">
+      <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_StatusMaster.cs">
       <DependentUpon>ArbanZonesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_UserDetail.cs">

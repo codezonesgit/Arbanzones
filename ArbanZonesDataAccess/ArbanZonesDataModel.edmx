@@ -41,6 +41,16 @@
           <Property Name="EntryDate" Type="datetime" />
           <Property Name="EntryBy" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tbl_ProblemImageMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceItemId" Type="int" />
+          <Property Name="ProblemId" Type="varchar" MaxLength="120" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="RegId" Type="varchar" MaxLength="120" />
+        </EntityType>
         <EntityType Name="tbl_Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -50,6 +60,72 @@
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="EntryBy" Type="varchar" MaxLength="50" />
+          <Property Name="EntryDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceItemMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="ItemTitleName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="AvgPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="DecriptionTitle1" Type="varchar" MaxLength="100" />
+          <Property Name="DecriptionTitle2" Type="nchar" MaxLength="10" />
+          <Property Name="Decription" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="EntryBy" Type="varchar" MaxLength="50" />
+          <Property Name="EntryDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CatId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="EntryBy" Type="varchar" MaxLength="50" />
+          <Property Name="EntryDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="ServiceProblemId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ServiceItemId" Type="int" Nullable="false" />
+          <Property Name="AcceptBy" Type="varchar" MaxLength="80" />
+          <Property Name="Amout" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="CompleteDate" Type="datetime" />
+          <Property Name="EntryDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceProblem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="180" Nullable="false" />
+          <Property Name="ServiceItemId" Type="int" />
+          <Property Name="DateOfAvailibility" Type="datetime" />
+          <Property Name="PreferredAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UserId" Type="varchar" MaxLength="100" />
+          <Property Name="EntryDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceProblemRejected">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ServiceProblemId" Type="varchar" MaxLength="120" />
+          <Property Name="ServiceProviderId" Type="varchar" MaxLength="80" />
+          <Property Name="StatusId" Type="int" />
           <Property Name="EntryDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tbl_ServiceProvider">
@@ -64,6 +140,17 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="EntryBy" Type="varchar" MaxLength="50" />
           <Property Name="EntryDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_StatusMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="EntryBy" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tbl_UserDetail">
           <Key>
@@ -90,8 +177,15 @@
           <EntitySet Name="tbl_Banner" EntityType="Self.tbl_Banner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CategoryMaster" EntityType="Self.tbl_CategoryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Offer" EntityType="Self.tbl_Offer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ProblemImageMaster" EntityType="Self.tbl_ProblemImageMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Role" EntityType="Self.tbl_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ServiceItemMaster" EntityType="Self.tbl_ServiceItemMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ServiceMaster" EntityType="Self.tbl_ServiceMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ServiceOrder" EntityType="Self.tbl_ServiceOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ServiceProblem" EntityType="Self.tbl_ServiceProblem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ServiceProblemRejected" EntityType="Self.tbl_ServiceProblemRejected" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ServiceProvider" EntityType="Self.tbl_ServiceProvider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_StatusMaster" EntityType="Self.tbl_StatusMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserDetail" EntityType="Self.tbl_UserDetail" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -109,6 +203,13 @@
           </AssociationSet>
           <EntitySet Name="tbl_Banner" EntityType="ArbanZonesModel.tbl_Banner" />
           <EntitySet Name="tbl_Offer" EntityType="ArbanZonesModel.tbl_Offer" />
+          <EntitySet Name="tbl_ProblemImageMaster" EntityType="ArbanZonesModel.tbl_ProblemImageMaster" />
+          <EntitySet Name="tbl_ServiceItemMaster" EntityType="ArbanZonesModel.tbl_ServiceItemMaster" />
+          <EntitySet Name="tbl_ServiceMaster" EntityType="ArbanZonesModel.tbl_ServiceMaster" />
+          <EntitySet Name="tbl_ServiceOrder" EntityType="ArbanZonesModel.tbl_ServiceOrder" />
+          <EntitySet Name="tbl_ServiceProblem" EntityType="ArbanZonesModel.tbl_ServiceProblem" />
+          <EntitySet Name="tbl_ServiceProblemRejected" EntityType="ArbanZonesModel.tbl_ServiceProblemRejected" />
+          <EntitySet Name="tbl_StatusMaster" EntityType="ArbanZonesModel.tbl_StatusMaster" />
         </EntityContainer>
         <EntityType Name="tbl_CategoryMaster">
           <Key>
@@ -205,6 +306,93 @@
           <Property Name="EntryDate" Type="DateTime" Precision="3" />
           <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tbl_ProblemImageMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceItemId" Type="Int32" />
+          <Property Name="ProblemId" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RegId" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceItemMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <Property Name="ItemTitleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AvgPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DecriptionTitle1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DecriptionTitle2" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Decription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceProblemId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceItemId" Type="Int32" Nullable="false" />
+          <Property Name="AcceptBy" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Amout" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="CompleteDate" Type="DateTime" Precision="3" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceProblem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="180" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceItemId" Type="Int32" />
+          <Property Name="DateOfAvailibility" Type="DateTime" Precision="3" />
+          <Property Name="PreferredAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UserId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_ServiceProblemRejected">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ServiceProblemId" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceProviderId" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_StatusMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="EntryBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -295,6 +483,100 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="OfferImgUrl" ColumnName="OfferImgUrl" />
                 <ScalarProperty Name="OfferId" ColumnName="OfferId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ProblemImageMaster">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_ProblemImageMaster">
+              <MappingFragment StoreEntitySet="tbl_ProblemImageMaster">
+                <ScalarProperty Name="RegId" ColumnName="RegId" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ProblemId" ColumnName="ProblemId" />
+                <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ServiceItemMaster">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_ServiceItemMaster">
+              <MappingFragment StoreEntitySet="tbl_ServiceItemMaster">
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Decription" ColumnName="Decription" />
+                <ScalarProperty Name="DecriptionTitle2" ColumnName="DecriptionTitle2" />
+                <ScalarProperty Name="DecriptionTitle1" ColumnName="DecriptionTitle1" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="AvgPrice" ColumnName="AvgPrice" />
+                <ScalarProperty Name="ItemTitleName" ColumnName="ItemTitleName" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ServiceMaster">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_ServiceMaster">
+              <MappingFragment StoreEntitySet="tbl_ServiceMaster">
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CatId" ColumnName="CatId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ServiceOrder">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_ServiceOrder">
+              <MappingFragment StoreEntitySet="tbl_ServiceOrder">
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Amout" ColumnName="Amout" />
+                <ScalarProperty Name="AcceptBy" ColumnName="AcceptBy" />
+                <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
+                <ScalarProperty Name="ServiceProblemId" ColumnName="ServiceProblemId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ServiceProblem">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_ServiceProblem">
+              <MappingFragment StoreEntitySet="tbl_ServiceProblem">
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PreferredAmount" ColumnName="PreferredAmount" />
+                <ScalarProperty Name="DateOfAvailibility" ColumnName="DateOfAvailibility" />
+                <ScalarProperty Name="ServiceItemId" ColumnName="ServiceItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ServiceProblemRejected">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_ServiceProblemRejected">
+              <MappingFragment StoreEntitySet="tbl_ServiceProblemRejected">
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
+                <ScalarProperty Name="ServiceProblemId" ColumnName="ServiceProblemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_StatusMaster">
+            <EntityTypeMapping TypeName="ArbanZonesModel.tbl_StatusMaster">
+              <MappingFragment StoreEntitySet="tbl_StatusMaster">
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
